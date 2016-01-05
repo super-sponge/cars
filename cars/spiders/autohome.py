@@ -15,7 +15,7 @@ from cars.items import CarsItem
 class AutohomeSpider(CrawlSpider):
     name = 'autohome'
     allowed_domains = ['autohome.com.cn']
-    start_urls = ['http://www.autohome.com.cn/3627']
+    start_urls = ['http://www.autohome.com.cn/3627','http://www.autohome.com.cn']
 
     rules = (
         Rule(LinkExtractor(allow=r'http://www.autohome.com.cn/[\d]+/#pvareaid=[\d]+$'), callback='parse_page',
