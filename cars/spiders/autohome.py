@@ -4,7 +4,7 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.loader import ItemLoader
 import json
-import sys
+import sys, re
 
 reload(sys)
 sys.setdefaultencoding('gbk')
@@ -15,7 +15,8 @@ from cars.items import CarsItem
 class AutohomeSpider(CrawlSpider):
     name = 'autohome'
     allowed_domains = ['autohome.com.cn']
-    start_urls = ['http://www.autohome.com.cn/3627','http://www.autohome.com.cn']
+    # start_urls = ['http://www.autohome.com.cn/3627','http://www.autohome.com.cn']
+    start_urls = ['http://www.autohome.com.cn/3627']
 
     rules = (
         Rule(LinkExtractor(allow=r'http://www.autohome.com.cn/[\d]+/#pvareaid=[\d]+$'), callback='parse_page',
@@ -88,6 +89,18 @@ class AutohomeSpider(CrawlSpider):
                   'AssistType': u'助力类型',
                   'bodyStructure': u'车体结构',
                   }
+
+    def start_requests(self):
+
+        for url in self.start_urls:
+            m =re.match(r'http://www.autohome.com.cn/([\d]+)', url)
+            if m:
+                carId = m.group(1)
+                configUrl = 'http://car.autohome.com.cn/config/series/%s.html' % carId
+                yield scrapy.Request(configUrl, self.parse_config, meta={'carId': carId})
+            yield self.make_requests_from_url(url)
+
+
 
     def parse_page(self, response):
         carId = response.url.split('/')[-2]

@@ -61,9 +61,9 @@ NEWSPIDER_MODULE = 'cars.spiders'
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'cars.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'cars.pipelines.CarsPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -84,5 +84,10 @@ NEWSPIDER_MODULE = 'cars.spiders'
 #HTTPCACHE_IGNORE_HTTP_CODES=[]
 #HTTPCACHE_STORAGE='scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-FEED_URI = u'file:///home/sponge/scrapy/cars/data/cars.csv'
-FEED_FORMAT = 'CSV'
+CSV_DELIMITER = ','
+FEED_EXPORTERS = {
+    'csv': 'cars.middleware.OrderCsvItemExporter',
+}
+FIELDS_TO_EXPORT = ['carName','carId','name','prices','factory','level','engine','gearbox','lwh','bodywork','maxSpeed','acceleration100','trueAcceleration100','brake','fuelConsumption','MFuelConsumption','groundClearance','vehicleWarranty','length','wide','high','wheelbase','frontGauge','backGauge','MinimumGroundClearance','kerbMass','bodywork','doors','sits','fuelCapacity','LuggageCapacity','engineType','displacement','airIntakeForm','cylinderArrangement','cylinders','valvesPerCylinder','compressionRatio','valveActuatingMechanism','bore','stroke','maximumHorsepower','maximumPower','maximumPowerSpeed','maxTorque','maximumTorqueSpeed','engineSpecifictechnology','fuelForm','fuelLabel','oilSupplyMode','cylinderHeadMaterial','cylinderMaterial','EnvironmentalStandards','gearboxName','gearboxblocks','gearboxType','drivingMode','frontSuspensionType','rearSuspensionType','AssistType','bodyStructure']
+# FEED_URI = u'file:///home/sponge/scrapy/cars/data/cars_new.csv'
+# FEED_FORMAT = 'CSV'
