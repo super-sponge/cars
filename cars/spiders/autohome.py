@@ -16,10 +16,10 @@ class AutohomeSpider(CrawlSpider):
     name = 'autohome'
     allowed_domains = ['autohome.com.cn']
     # start_urls = ['http://www.autohome.com.cn/3627','http://www.autohome.com.cn']
-    start_urls = ['http://www.autohome.com.cn/3627']
+    start_urls = ['http://www.autohome.com.cn/3627','http://www.autohome.com.cn/4817']
 
     rules = (
-        Rule(LinkExtractor(allow=r'http://www.autohome.com.cn/[\d]+/#pvareaid=[\d]+$'), callback='parse_page',
+        Rule(LinkExtractor(allow=r'https://www.autohome.com.cn/[\d]+/#pvareaid=[\d]+$'), callback='parse_page',
              follow=True),
         # Rule(LinkExtractor(allow=r'http://www.autohome.com.cn/[\d]+/#pvareaid=[\d]+$'), callback='parse_page', follow=True),
     )
@@ -117,7 +117,8 @@ class AutohomeSpider(CrawlSpider):
             optionIndexEnd = response.body.find(';', optionIndexStart)
         if optionIndexEnd != -1:
             optionStr = response.body[optionIndexStart + len(optionKey):optionIndexEnd]
-            optionStr = optionStr.decode('gb18030').encode('utf-8')
+            #print optionStr
+            #optionStr = optionStr.decode('gb18030').encode('utf-8')
             optionJson = json.loads(optionStr)
             cars = dict()
 
