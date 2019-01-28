@@ -88,6 +88,6 @@ CSV_DELIMITER = ','
 FEED_EXPORTERS = {
     'csv': 'cars.middleware.OrderCsvItemExporter',
 }
-FIELDS_TO_EXPORT = ['carName','carId','name','prices','factory','level','engine','gearbox','lwh','bodywork','maxSpeed','acceleration100','trueAcceleration100','brake','fuelConsumption','MFuelConsumption','groundClearance','vehicleWarranty','length','wide','high','wheelbase','frontGauge','backGauge','MinimumGroundClearance','kerbMass','bodywork','doors','sits','fuelCapacity','LuggageCapacity','engineType','displacement','airIntakeForm','cylinderArrangement','cylinders','valvesPerCylinder','compressionRatio','valveActuatingMechanism','bore','stroke','maximumHorsepower','maximumPower','maximumPowerSpeed','maxTorque','maximumTorqueSpeed','engineSpecifictechnology','fuelForm','fuelLabel','oilSupplyMode','cylinderHeadMaterial','cylinderMaterial','EnvironmentalStandards','gearboxName','gearboxblocks','gearboxType','drivingMode','frontSuspensionType','rearSuspensionType','AssistType','bodyStructure']
+FIELDS_TO_EXPORT = ['carName','carId','engine','gearbox','lwh','bodywork','maxSpeed','sits','fuelForm','gearboxName','gearboxblocks','gearboxType']
 # FEED_URI = u'file:///home/sponge/scrapy/cars/data/cars_new.csv'
 # FEED_FORMAT = 'CSV'
