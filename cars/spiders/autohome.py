@@ -6,8 +6,8 @@ from scrapy.loader import ItemLoader
 import json
 import sys, re
 
-reload(sys)
-sys.setdefaultencoding('gbk')
+#reload(sys)
+#sys.setdefaultencoding('gbk')
 
 from cars.items import CarsItem
 
@@ -58,14 +58,12 @@ class AutohomeSpider(CrawlSpider):
         carId = response.meta['carId']
         self.logger.info('A response from %s and Id is %s' % (response.url, carId))
         optionKey = 'var config = '
-        optionIndexStart = response.body.find(optionKey)
+        optionIndexStart = response.body.decode('utf-8').find(optionKey)
         optionIndexEnd = -1
         if optionIndexStart != -1:
-            optionIndexEnd = response.body.find(';', optionIndexStart)
+            optionIndexEnd = response.body.decode('utf-8').find(';', optionIndexStart)
         if optionIndexEnd != -1:
-            optionStr = response.body[optionIndexStart + len(optionKey):optionIndexEnd]
-            #print optionStr
-            #optionStr = optionStr.decode('gb18030').encode('utf-8')
+            optionStr = response.body.decode('utf-8')[optionIndexStart + len(optionKey):optionIndexEnd]
             optionJson = json.loads(optionStr)
             cars = dict()
 
@@ -79,15 +77,15 @@ class AutohomeSpider(CrawlSpider):
                 #         for k, v in self.dataHeader.iteritems():
                 #             self.extractValue(v, k, basicInfo, cars)
                 for basicInfo in topItem['paramitems']:
-                    for k, v in self.dataHeader.iteritems():
+                    for k, v in self.dataHeader.items():
                         self.extractValue(v, k, basicInfo, cars)
 
             carName = response.xpath('//div[@class="subnav-title-name"]/a/text()').extract()
-            for k, v in cars.iteritems():
+            for k, v in cars.items():
                 il = ItemLoader(item=CarsItem(), response=response)
                 il.add_value('carName', carName)
                 il.add_value('carId', str(k).strip('[').strip(']'))
-                for sk, sv in v.iteritems():
+                for sk, sv in v.items():
                     il.add_value(sk, sv)
                 yield il.load_item()
 
